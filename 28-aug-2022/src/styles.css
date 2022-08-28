@@ -1,0 +1,121 @@
+
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./assets/css/commonCss.css";
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* material styles */
+/* .mat-tab-header{
+    border:none;
+} */
+.mat-tab-header{
+    border-bottom: 1px solid #639ab5;
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.mat-tab-label{
+    opacity: unset !important;
+    padding: 10px !important;
+    padding-left:0px !important ;
+    margin-right: 20px !important;
+    min-width: 0px !important;
+    padding-right: 0px !important;
+    color: #24495b !important;
+    height: 45px !important;
+}
+
+.mat-tab-label-active{
+    position: relative;
+    z-index: 5;
+    top: 1px;
+    border-bottom: 3px solid #24495b;
+}
+
+.mat-tab-label-active .mat-tab-label-content{
+    font-weight: 500 !important;
+    color: #24495b !important;
+}
+
+.mat-tab-label-active .tab-name{
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #24495b !important;
+}
+
+.mat-tab-label .tab-name:hover{
+    color: #24495b !important;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+  
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #eee;
+  }
+
+.mat-dialog-container {
+    padding: 15px !important;
+}
+
+.mat-tab-body-wrapper{
+    height: 100%;
+}
+
+.mat-tab-body{
+    height: 100%;
+}
+
+.record-pagination ul.ngx-pagination {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.record-pagination .ngx-pagination a:hover{
+    background: #419ae8 !important;
+    color: #fff;
+}
+
+.record-pagination .ngx-pagination a{
+    text-decoration: none;
+}
+
+a{
+    color: unset;
+}
+
+a:hover{
+    text-decoration: none !important;
+}
+
+.d-block{
+    display: block;
+}
+
+.toolbar-spacer{
+    flex:1 1 auto;
+}
+
+.d-flex{
+    display: flex!important;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column!important;
+}
+
+body{
+    margin:0;
+    font-family:Roboto, "Helvetica Neue",sans-serif;
+}

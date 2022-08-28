@@ -1,0 +1,24 @@
+<!-- <mat-toolbar class="mat-elevation-z4" color="primary">
+    <a href="/" class="title heading">AirServ BASS</a>
+    <div class="toolbar-spacer"></div>
+    <a mat-button [routerLink]="['profile']">Profile</a>
+    <button mat-raised-button *ngIf="isUserLoggedIn" (click)="logout()" class="btn">Logout</button>
+  </mat-toolbar> -->
+<div class="header-area">
+    <app-header></app-header>
+</div>
+
+<div *ngIf="isUserLoggedIn">
+    <mat-card class="title-card">
+        <mat-card-content>
+            <div class="center">
+                <h1 class="center blue  d-flex align-center j-center" >Welcome to AirServ BASS</h1>
+                <p class="center d-flex align-center j-center cadet-blue">You Have Successfully Logged In</p>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div *ngIf="!isUserLoggedIn">
+    <mat-progress-spinner></mat-progress-spinner>
+</div>

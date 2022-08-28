@@ -1,0 +1,24 @@
+<div class="container-fluid header-parent">
+    <div class="row header-section p-b-10 p-t-10">
+      <div class=" logo-container p-t-0 p-b-0 p-l-20 p-r-0">
+        <div class="logo-text" >
+          <div class="c-pointer outerlogo f-w-600 d-flex align-end" >
+            <img src="/assets/icons/air-servlogo.png" width="70px" height="50px">
+            <div class="innerlogo m-l-5 flex-column j-end ">
+              <div class="f-w-600 f-s-15 h-15">BASS</div>
+              <div class="f-w-500 f-s-12 h-15">Branch Activity Service System</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="account d-flex align-end j-end p-r-20">
+        <img class="no-close c-pointer" src="assets/icons/user-icon.png" width="36px" height="35px" alt="" (click)="dropDown=!dropDown">
+        <div class="drop-down" *ngIf="dropDown">
+            <div class="f-s-13 p-l-10 p-r-10 p-b-2 p-t-2 c-pointer d-flex align-center">
+              <i class="fa fa-power-off float-left "></i> 
+              <span> Logout</span>
+            </div>
+        </div>
+      </div>  
+    </div>
+  </div>
