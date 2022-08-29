@@ -1,0 +1,71 @@
+<div class="header-area">
+    <app-header (logEvent)="logout($event)" [currentAccount]="currentAccount"></app-header>
+</div>
+
+<div class="details-body p-t-20 m-t-10" *ngIf="isUserLoggedIn">
+    <div class="d-flex m-l-20 m-r-20">
+        <div class="task-details-area  t-details m-b-10 w-25" >           
+            <ng-container >
+                <div class="bucket-area item-box m-b-10  p-t-10 p-b-15 h-100">
+                    <div class="d-flex align-center search-bar p-l-10 p-r-10 ">
+                        <input class="f-s-13 p-5" type="text" placeholder="Search">
+                        <div class="s-button d-flex align-center j-center"><i class="fa fa-search fa-flip-horizontal" style="color:rgb(242, 242, 242) !important;"></i></div>
+                    </div>
+                    <div class="w-100 m-t-15 m-l-0 m-r-0  ">
+                        <ng-container *ngFor="let branch of branches">
+                          <div class="branch flex-column m-t-10">
+                            <div class="d-flex  align-center  w-100 p-l-10">
+                                <div  class="m-r-8 icon d-flex align-center j-center"><img src="assets/icons/down2.png" alt="" height="65%" width="65%"></div>
+                                <div class="route d-flex align-center">
+                                    <img src="assets/icons/branch.png" alt="" height="18px" width="16px">
+                                    <div class="m-l-2 f-s-14 f-w-500">{{branch?.branchname}}</div>
+                                </div>
+                            </div>
+                            <div class="p-l-15 m-t-10 f-s-13">
+                                <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                <div class="d-flex align-center  w-100"><img src="assets/icons/machine2.png" alt="" height="15px" width="17px"> <span class="m-l-3">Machinery</span> </div> </div>
+                            </div>
+                            <div class="technician m-t-10 f-s-13 " *ngFor="let technician of branch?.technicians">
+                                <div class="p-l-15 d-flex w-100 align-center " [ngClass]="technician?.selected ? 'selected' : ''"><div class="fa fa-angle-down angle fa-fw" ></div>
+                                <div class="d-flex align-bottom  w-100 p-t-5 p-b-3"><img src="assets/icons/user.png" alt="" height="14px" width="16px"> <span class="m-l-2">{{technician?.name}}</span> </div> </div>
+                                <div class="p-l-30  f-s-12" *ngFor="let route of technician?.routes">
+                                    <div class="d-flex w-100 align-center "><div class="fa fa-angle-down angle fa-fw"></div>
+                                    <div class="d-flex align-bottom  w-100 p-t-5 p-b-5 light-blue"><img src="assets/icons/route.png" alt="" height="15px" width="14px"> <span class="m-l-2">{{route?.route}}</span> </div> </div>
+                                    <div *ngFor="let location of route?.locations" class="p-l-25 d-flex align-bottom  w-100 p-t-2 p-b-2 c-gr gap-2">
+                                        <img src="assets/icons/navigation.png" alt="" height="10px" width="12px"> 
+                                        <div class="m-l-2 d-flex text-overfl">{{location}}</div> 
+                                    </div>     
+                                </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <!--  -->
+        <div  class="p-t-10 w-75 m-l-20 ">
+            <p class="f-s-13 t-a-right m-b-5 c-grey"><i class="fa far fa-home"></i>/ Routes/ Canada-East/ <span class="highlighted-text f-w-500">Henderson Sherry</span></p>
+            <div class=" item-box m-b-10 p-t-15 p-b-15 w-100 d-flex">
+                <div class="d-flex align-top  p-l-10 p-r-10 flex-3">
+                    <div class="d-flex align-bottom round j-end"></div>
+                   <div class="flex-column m-l-5 j-end">
+                     <div class="f-s-14">HENDERSON SHERRY</div>
+                     <div class="f-s-11"><img src="assets/icons/spanner.png" width="17px" height="16px" alt=""> Technician</div>
+                   </div>
+                </div>
+                <div class="d-flex align-center main-search-bar p-l-10 p-r-10 ">
+                    <input class="f-s-13 p-5" type="text" placeholder="Search">
+                    <i class="fa fa-search fa-flip-horizontal sb " ></i>
+                    <div class="main-s-button d-flex align-center j-center f-s-12 p-l-10 p-r-10 gap-2"><div>Location</div> <i class="fa fa-angle-down angle fa-fw m-t-2" ></i></div>
+                </div>
+                <div class="d-flex align-center  p-l-10 p-r-10 flex-1">
+                     <div class="f-s-13 c-gr"><img src="assets/icons/spanner.png" width="17px" height="16px" alt=""> List View</div>
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
