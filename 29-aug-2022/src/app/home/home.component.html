@@ -1,0 +1,64 @@
+<div class="header-area">
+    <app-header (logEvent)="logout($event)" [currentAccount]="currentAccount"></app-header>
+</div>
+
+<div class="details-body p-t-20 m-t-10" *ngIf="isUserLoggedIn">
+    <div class="d-flex m-l-20 m-r-20">
+        <div class="task-details-area  t-details m-b-10 w-25" >           
+            <ng-container >
+                <div class="bucket-area item-box m-b-10  p-t-10 p-b-15 h-100">
+                    <div class="d-flex align-center search-bar p-l-10 p-r-10 ">
+                        <input class="f-s-13 p-5" type="text" placeholder="Search">
+                        <div class="s-button d-flex align-center j-center"><i class="fa fa-search fa-flip-horizontal" style="color:rgb(242, 242, 242) !important;"></i></div>
+                    </div>
+                    <div class="w-100 m-t-15 m-l-0 m-r-0  ">
+                        <ng-container >
+                          <div class="branch flex-column">
+                            <div class="d-flex  align-center  w-100 p-l-10">
+                                <div  class="m-r-8 icon d-flex align-center j-center"><img src="assets/icons/down2.png" alt="" height="65%" width="65%"></div>
+                                <div class="route d-flex align-center">
+                                    <img src="assets/icons/branch.png" alt="" height="18px" width="16px">
+                                    <div class="m-l-2 f-s-14 f-w-500">Canada-East</div>
+                                </div>
+                            </div>
+                            <div class="p-l-15 m-t-10 f-s-13">
+                                <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                <div class="d-flex align-center  w-100"><img src="assets/icons/machine2.png" alt="" height="15px" width="17px"> <span class="m-l-3">Machinery</span> </div> </div>
+                            </div>
+                            <div class="p-l-15 m-t-10 f-s-13 selected">
+                                <div class="d-flex w-100 align-center "><div class="fa fa-angle-down angle fa-fw" ></div>
+                                <div class="d-flex align-bottom  w-100 p-t-5 p-b-5"><img src="assets/icons/user.png" alt="" height="14px" width="16px"> <span class="m-l-2">Henderson Sherry</span> </div> </div>
+                            </div>
+                            <div class="p-l-30  f-s-12">
+                                <div class="d-flex w-100 align-center "><div class="fa fa-angle-down angle fa-fw" ></div>
+                                <div class="d-flex align-bottom  w-100 p-t-5 p-b-5 light-blue"><img src="assets/icons/route.png" alt="" height="13px" width="14px"> <span class="m-l-2">routeadqwf</span> </div> </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <!--  -->
+        <div  class="p-t-10 w-75 m-l-20 ">
+            <p class="f-s-13 t-a-right m-b-5 c-grey"><i class="fa far fa-home"></i>/ Routes/ Canada East/ <span class="highlighted-text f-w-500">Henderson Sherry</span></p>
+            <div class="bucket-area item-box m-b-10 p-t-25 p-b-15" style="height:600px">
+                <div class="d-flex align-bottom buckets-heading p-l-10 p-r-10">
+                    <!-- <img src="assets/icons/Shoping Icon-4.png" width="18px" height="12px"> -->
+                    <p class="f-s-13 f-w-500 m-l-10 m-b-0"></p>
+                </div>
+                <div class="row w-100 m-t-15 m-l-0 m-r-0">
+                    <ng-container >
+                        <div class="bucket-parent m-t-10 " 
+                            [ngStyle]="{'width': (100 / 5) + '%'}">
+            
+                            <div class="m-l-5">
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
