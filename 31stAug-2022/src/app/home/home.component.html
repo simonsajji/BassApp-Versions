@@ -1,0 +1,111 @@
+<div class="header-area">
+    <app-header (logEvent)="logout($event)" [currentAccount]="currentAccount"></app-header>
+</div>
+
+<div  class="details-body p-t-20 m-t-10" *ngIf="isUserLoggedIn">
+    <div class="d-flex m-l-20 m-r-20 ">
+        <div class=" m-b-10 w-25" >           
+            <ng-container >
+                <div class="item-box m-b-10  p-t-10 p-b-15 h-100">
+                    <div class="d-flex align-center search-bar p-l-10 p-r-10 ">
+                        <input class="f-s-13 p-5" type="text" placeholder="Search">
+                        <div class="s-button d-flex align-center j-center"><i class="fa fa-search fa-flip-horizontal" style="color:rgb(242, 242, 242) !important;"></i></div>
+                    </div>
+                    <div class="w-100 m-t-15 m-l-0 m-r-0  ">
+                        <ng-container *ngFor="let branch of branches">
+                          <div class="branch flex-column m-t-10">
+                            <div class="d-flex  align-center  w-100 p-l-10">
+                                <div  class="m-r-8 icon d-flex align-center j-center"><img src="assets/icons/down2.png" alt="" height="65%" width="65%"></div>
+                                <div class="route d-flex align-center">
+                                    <img src="assets/icons/branch.png" alt="" height="18px" width="16px">
+                                    <div class="m-l-2 f-s-14 f-w-500">{{branch?.branchname}}</div>
+                                </div>
+                            </div>
+                            <div class="p-l-15 m-t-10 f-s-13">
+                                <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                <div class="d-flex align-center  w-100"><img src="assets/icons/machine2.png" alt="" height="15px" width="17px"> <span class="m-l-3">Machinery (204)</span> </div> </div>
+                            </div>
+                            <div class="p-l-15 m-t-5 f-s-13">
+                                <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                <div class="d-flex align-center  w-100"><img src="assets/icons/collections2.png" alt="" height="15px" width="17px"> <span class="m-l-3">Collections ($14314)</span> </div> </div>
+                            </div>
+                            <div class="p-l-15 m-t-5 f-s-13">
+                                <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                <div class="d-flex align-center  w-100"><img src="assets/icons/user.png" alt="" height="14px" width="17px"> <span class="m-l-3">Technicians (10)</span> </div> </div>
+                            </div>
+                            <div class="p-l-15 m-t-5 f-s-13">
+                                <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                <div class="d-flex align-center  w-100 m-r-2 "><img src="assets/icons/navigation.png" alt="" height="14px" width="15px"> <span class="m-l-3 max-h">Routes (24)</span> </div> </div>
+                            </div>
+                            <div class=" m-t-5 f-s-13 " >
+                                <div class="p-l-15 d-flex w-100 align-center " [ngClass]="branch?.locations?.selected ? 'selected' : ''"><div class="fa fa-angle-down angle fa-fw" ></div>
+                                <div (click)="selectBranchLocation(branch)" class="d-flex align-bottom  w-100 p-t-5 p-b-5 c-pointer" ><img src="assets/icons/route.png" alt="" height="14px" width="17px"> <span class="m-l-2 max-h" [ngClass]="branch?.locations?.selected ? 'selected-item' : ''">Locations ({{branch?.locations?.loclength}})</span> </div> </div>
+                                <div class="p-l-30 d-flex w-100 align-center ">
+                                    <div class="unrouted d-flex align-bottom m-l-5 w-100 p-t-5 p-b-5 f-w-500 f-s-12"><img src="assets/icons/navigation.png" alt="" height="13px" width="15px"> <span class="m-l-2">unrouted</span> </div> 
+                                </div>
+                                <div class="p-l-30  f-s-12" *ngFor="let route of branch?.locations?.routes">
+                                    <div class="d-flex w-100 align-center m-l-5">
+                                    <div class="d-flex align-bottom  w-100 p-t-5 p-b-5 light-blue"><img src="assets/icons/navigation.png" alt="" height="13px" width="13px"> <span class="m-l-2">{{route?.route}}</span> </div> </div>
+                                    <div *ngFor="let location of route?.locs" class="p-l-25 d-flex align-bottom  w-100 p-t-2 p-b-2 c-gr">
+                                        <img src="assets/icons/route.png" alt="" height="10px" width="12px"> 
+                                        <div class="m-l-2 d-flex text-overfl">{{location?.locname}}</div> 
+                                    </div>     
+                                </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <!--  -->
+        <div  class="p-t-10 w-75 m-l-20 ">
+            <p class="f-s-13 t-a-right m-b-5 c-grey"><i class="fa far fa-home"></i>/ Routes/ Canada-East/ <span class="highlighted-text f-w-500">Henderson Sherry</span></p>
+            <div class=" item-box m-b-10 p-t-15 p-b-15 w-100 d-flex">
+                <div class="d-flex align-center  p-l-10 p-r-10 flex-3">
+                    <img src="assets/icons/route.png" width="24px" height="24px" alt="">
+                   <div class="flex-column m-l-5 j-end">
+                     <div class="f-s-15 f-w-500">LOCATIONS ({{this.selectedBranchLoc?.locations?.loclength}})</div>
+                   </div>
+                </div>
+                <div class="d-flex align-center main-search-bar p-l-10 p-r-10 ">
+                    <input class="f-s-13 p-5" type="text" placeholder="Search">
+                    <i class="fa fa-search fa-flip-horizontal sb " ></i>
+                    <div class="main-s-button d-flex align-center j-center f-s-12 p-l-10 p-r-10 gap-2"><div>Location</div> <i class="fa fa-angle-down angle fa-fw m-t-2" ></i></div>
+                </div>
+                <div class="d-flex align-center  p-l-10 p-r-10 flex-1">
+                     <div class="f-s-13 c-gr d-flex"><img src="assets/icons/view.png" width="17px" height="17px" alt=""> <div class="m-l-5">List View</div> </div>
+                </div>
+            </div>
+            <div class=" m-b-10 p-t-10  p-b-10 w-100 flex-column">
+                <div class=" d-flex w-100 align-center ">
+                    <div class=" sub-head unrouted d-flex align-center m-l-5 w-100 p-t-5 p-b-5 f-w-400 f-s-13"><span  #sr> <i class="fa fa-angle-right f-s-18 p-r-10 fa-fw"></i> <img class="m-r-2 m-l-2" src="assets/icons/navigation.png" alt="" height="20px" width="20px"> <span class="f-s-12 p-l-2">UNROUTED</span></span>  <hr [style.width]="'calc(98% - ' + (sr.clientWidth) + 'px)'"  class="hor-line "></div>
+                </div>
+                <div class="w-100 m-t-5 m-l-0 m-r-0  ">
+                    <ng-container *ngFor="let branch of branches">
+                        <div class=" m-t-5 f-s-13 " *ngIf="branch?.locations?.selected">
+                            <div  class=" f-s-12 w-100" *ngFor="let route of branch?.locations?.routes">
+                                <div class="d-flex w-100 align-center m-l-5">
+                                <div (contextmenu)="onRightClick($event,route)" class="d-flex align-bottom p-t-5 p-b-5 light-blue c-pointer"><img src="assets/icons/navigation.png" alt="" height="20px" width="20px"> <span class="m-l-5">{{route?.route}}</span> </div> </div>
+                                <div class="w-100 d-flex p-10 flex-wrap">
+                                    <div (contextmenu)="onRightClick($event,location)" *ngFor="let location of route?.locs" [ngClass]="draggeditem==location ? 'primaryloc-selected':''" class="location-card p-5 m-r-10 m-b-10 flex-column ">
+                                        <div class="m-l-2 flex-column  f-w-500 t-a-center flex-3 align-center j-center ">
+                                            <img src="assets/icons/route.png" alt="" height="30px" width="30px"> 
+                                            <div class="loc-id f-s-9 light-blue f-w-400 m-t-2">ID {{location?.id}}</div>
+                                            <div class="text-overfl f-s-11 t-a-center loc-name d-flex align-center">{{location?.locname}}</div>
+                                        </div> 
+                                        <div class="technician border-top f-s-10 flex-1  d-flex align-center p-l-5 p-r-5 gap-2">
+                                            <img src="assets/images/Ellipse -4.png" width="14px" height="14px" alt="" srcset="">  
+                                            <div >Henderson Sherry</div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                                                     
+                            </div>
+                        </div>
+                    </ng-container>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
