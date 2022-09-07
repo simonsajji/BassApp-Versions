@@ -1,0 +1,218 @@
+<div class="header-area">
+    <app-header (logEvent)="logout($event)" [currentAccount]="currentAccount"></app-header>
+</div>
+<div *ngIf="!branchData" class="d-flex w-100  align-center j-center loader">
+    <mat-spinner></mat-spinner>
+</div>
+<div  class="details-body p-t-0 m-t-10" *ngIf="isUserLoggedIn && branchData">
+    <div class=" m-r-20 h-100  container-fluid d-flex ">
+        <div class="w-25 m-b-20 l-bar  left-menu m-t-30 " >           
+            <div class="item-box">
+                <div class="  m-b-10  p-t-10 p-b-15  ctr">
+                    <div class="d-flex align-center search-bar p-l-10 p-r-10 p-t-5">
+                        <input class="f-s-13 p-5" type="text" placeholder="Search">
+                        <div class="s-button d-flex align-center j-center"><i class="fa fa-search fa-flip-horizontal" style="color:rgb(242, 242, 242) !important;"></i></div>
+                    </div>
+                    <div class="w-100 m-t-15 m-l-0 m-r-0  ">
+                        <ng-container *ngFor="let branch of branchData">
+                          <div class="branch flex-column m-t-10">
+                            <div class="d-flex  align-center  w-100 p-l-10 p-t-5 p-b-5" [ngClass]="(branch?.BranchId==selectedBranch?.BranchId && branchView)? 'selected' : ''">
+                                <div  class="m-r-8 icon d-flex align-center j-center">
+                                    <img class="c-pointer" (click)="shrinkBranch(branch)" *ngIf="branch?.dropped" src="assets/icons/down2.png" alt="" height="65%" width="65%">
+                                    <img class="c-pointer" (click)="expandBranch(branch)" *ngIf="!branch?.dropped" src="assets/icons/right2.png" alt="" height="65%" width="65%">
+                                </div>
+                                <div (click)="currentbranchSelect(branch)" class="route d-flex align-center c-pointer">
+                                    <img src="assets/icons/branch.png" alt="" height="18px" width="16px">
+                                    <div class="m-l-2 f-s-14 f-w-500">{{branch?.BranchName}}</div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="branch?.dropped">
+                                <div class="p-l-15 m-t-5 f-s-13" title="This feature is coming soon">
+                                    <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                    <div class="d-flex align-center  w-100"><img src="assets/icons/machine2.png" alt="" height="15px" width="17px"> <span class="m-l-3">Machinery (204)</span> </div> </div>
+                                </div>
+                                <div class="p-l-15 m-t-5 f-s-13" title="This feature is coming soon">
+                                    <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                    <div class="d-flex align-center  w-100"><img src="assets/icons/collections2.png" alt="" height="15px" width="17px"> <span class="m-l-3">Collections ($14314)</span> </div> </div>
+                                </div>
+                                <div class="p-l-15 m-t-5 f-s-13" title="This feature is coming soon">
+                                    <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                    <div class="d-flex align-center  w-100"><img src="assets/icons/user.png" alt="" height="14px" width="17px"> <span class="m-l-3">Technicians (10)</span> </div> </div>
+                                </div>
+                                <div class="p-l-15 m-t-5 f-s-13" title="This feature is coming soon">
+                                    <div class="d-flex w-100 align-center "><div class="fa fa-angle-right angle fa-fw" ></div>
+                                    <div class="d-flex align-center  w-100 m-r-2 "><img src="assets/icons/navigation.png" alt="" height="14px" width="15px"> <span class="m-l-3 max-h">Routes (24)</span> </div> </div>
+                                </div>
+                                <div class=" m-t-5 f-s-13 " >
+                                    <div  class="p-l-15 d-flex w-100 align-center " [ngClass]="(branch?.showRoutesList && locationsView) ? 'selected' : ''">
+                                        <div (click)="getAllRoutesofBranch(branch,'dropView')" *ngIf="!branch?.routesDropped"  class="fa fa-angle-right angle fa-fw c-pointer hover-highlight" ></div>
+                                        <div (click)="branch.routesDropped=false" *ngIf="branch?.routesDropped" class="fa fa-angle-down angle fa-fw c-pointer hover-highlight" ></div>
+                                    <div (click)="selectBranchLocation(branch)" class="d-flex align-bottom  w-100 p-t-5 p-b-5 c-pointer " ><img src="assets/icons/route.png" alt="" height="14px" width="17px" class="hover-highlight"> <span class="m-l-2 max-h hover-highlight" [ngClass]="(branch?.showRoutesList && locationsView)? 'selected-item ' : ''">Locations ({{branch?.LocationCount}})</span> </div> </div>
+                                    <ng-container *ngIf="branch?.routesDropped">
+                                        <div class="p-l-30 d-flex w-100 align-center m-t-5 ">
+                                            <i class="fa fa-angle-right f-s-14 c-pointer p-r-2 fa-fw hover-highlight p-t-5 p-b-5"></i> 
+                                            <div class="unrouted d-flex align-bottom   m-r-10 w-100 p-t-5 p-b-5 f-w-500 f-s-12 hover-highlight"><img src="assets/icons/navigation.png" alt="" height="13px" width="15px"> <span class="m-l-2">Unrouted</span> </div> 
+                                        </div>
+                                        <div class="f-s-13 flex-column" *ngFor="let route of branch?.Routes" (drop)="itemDrop($event, route)" (dragover)="allowDrop($event,route)"  [ngClass]="dropPoint?.RouteId==route.RouteId ? 'drop-point' : ''">
+                                            <div class="p-l-30 d-flex w-100 align-top " [ngClass]="selectedRoute?.RouteId==route?.RouteId ? 'selected selected-item':''">
+                                                <i (click)="getLocationsofRoute(route)" *ngIf="!route?.isrouteDropped" class="fa fa-angle-right f-s-14 c-pointer p-r-2 fa-fw hover-highlight p-t-5 p-b-5"></i> 
+                                                <i (click)="route.isrouteDropped=!route?.isrouteDropped" *ngIf="route?.isrouteDropped" class="fa fa-angle-down f-s-14 c-pointer p-r-2 fa-fw hover-highlight p-t-5 p-b-5"></i> 
+                                                <div (click)="selectRoute(route)" class="d-flex align-bottom  w-100 p-t-5 p-b-5  hover-highlight c-pointer text-overfl p-r-5" [ngClass]="route.isrouteDropped ? 'dropped-text' : ''"><img src="assets/icons/navigation.png" alt="" height="13px" width="13px"> <span class="m-l-2 f-s-11 text-overfl p-r-5 f-w-400">{{route?.RouteName}}</span> </div> 
+                                            </div>
+                                            <div *ngIf="route?.Locations?.length==0 && route?.isrouteDropped" class="d-flex align-center j-center c-gr f-s-11 empty-menu ">
+                                                No Locations to Show
+                                            </div>
+                                            <ng-container *ngIf="route?.Locations?.length > 0 && route?.isrouteDropped">
+                                                <div *ngFor="let location of route?.Locations" class="p-l-50 d-flex align-bottom  w-100 p-t-2 m-l-5 p-b-2 c-gr">
+                                                    <img src="assets/icons/route.png" alt="" height="10px" width="12px"> 
+                                                    <div class="m-l-4 d-flex text-overfl f-s-11">{{location?.StoreName}}</div> 
+                                                </div>
+                                            </ng-container>      
+                                        </div>
+                                    </ng-container>
+                                </div>
+
+                            </ng-container>
+                            
+                          </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div  class=" w-75 p-t-5 min-ht-container m-l-20 m-b-0">
+          <ng-container *ngIf="branchView"><p class="f-s-13 t-a-right m-b-10  m-r-10 max-h"><i class="fa far fa-home"></i>/ Branches / <span class="highlighted-text f-w-500"> {{selectedBranch?.BranchName}}</span></p></ng-container>  
+          <ng-container *ngIf="locationsView"><p class="f-s-13 t-a-right m-b-10  m-r-10 max-h"><i class="fa far fa-home"></i>/ Branches / {{selectedBranch?.BranchName}} / <span class="highlighted-text f-w-500">Locations</span></p></ng-container>  
+          <ng-container *ngIf="routesView"><p class="f-s-13 t-a-right m-b-10  m-r-10 max-h"><i class="fa far fa-home"></i>/ Routes / {{selectedBranch?.BranchName}} / <span class="highlighted-text f-w-500">Route</span></p></ng-container>  
+            <div class=" item-box5 m-b-10 p-t-20 p-b-20 w-100 d-flex">
+                <div class="d-flex align-center  p-l-10 p-r-10 flex-3">
+                    <img *ngIf="branchView" src="assets/icons/branch.png" width="24px" height="24px" alt="">
+                    <img *ngIf="locationsView" src="assets/icons/multiplelocations.png" width="22px" height="26px" alt="">
+                    <img *ngIf="routesView" src="assets/icons/navigation.png" width="24px" height="24px" alt="">
+                   <div class="flex-column m-l-5 j-end">
+                     <div *ngIf="branchView" class="f-s-16 f-w-500">{{selectedBranch?.BranchName}}</div>
+                     <div *ngIf="locationsView" class="f-s-16 f-w-500 m-l-5">LOCATIONS ({{selectedBranch?.LocationCount}})</div>
+                     <div *ngIf="routesView " class="f-s-13 f-w-500">{{this.selectedRoute?.RouteName}}</div>
+                   </div>
+                </div>
+                
+                <div class="d-flex align-center main-search-bar p-l-10 p-r-10 flex-3">
+                    <input class="f-s-13 p-5" type="text" placeholder="Search">
+                    <i class="fa fa-search fa-flip-horizontal sb " ></i>
+                    <div class="main-s-button d-flex align-center j-center f-s-12 p-l-10 p-r-10 gap-2">
+                        <div>Location</div> <i class="fa fa-angle-down angle fa-fw m-t-2" ></i></div>
+                </div>
+                <div class="d-flex align-center  p-l-10 m-r-20 flex-1 j-end">
+                     <div class="f-s-13 c-gr d-flex "><img src="assets/icons/view.png" width="17px" height="17px" alt=""> <div class="m-l-5">List View</div> </div>
+                </div>
+            </div>
+        
+            <div *ngIf="branchView" class="item-box6 m-b-5 p-t-10 p-b-5 w-100 flex-column r-ctr">
+                <div class="w-100 m-t-5 m-l-0 m-r-0  d-flex p-l-10 p-r-10 gap-2 flex-1">
+                    <div class="f-s-11 flex-column align-center p-10 c-gr" >
+                        <img src="assets/icons/machine2.png" alt="" height="30px" width="30px">
+                       <div class="p-t-5 p-b-5" >Machinery (4256)</div> 
+                    </div>
+                    <div class="f-s-11 flex-column align-center p-10 c-gr" >
+                        <img src="assets/icons/collections2.png" alt="" height="30px" width="30px">
+                       <div class="p-t-5 p-b-5">Collections ($25256)</div> 
+                    </div>
+                    <div class="f-s-11 flex-column align-center p-10 c-gr" >
+                        <img src="assets/icons/user.png" alt="" height="30px" width="30px">
+                       <div class="p-t-5 p-b-5">Techinicians (12)</div> 
+                    </div>
+                    <div class="f-s-11 flex-column align-center p-10 c-gr" >
+                        <img src="assets/icons/navigation.png" alt="" height="30px" width="30px">
+                       <div class="p-t-5 p-b-5">Routes (14)</div> 
+                    </div>
+                    <div class="f-s-11 flex-column align-center p-10 c-gr">
+                        <img src="assets/icons/route.png" alt="" height="30px" width="30px">
+                       <div class="p-t-5 p-b-5">Locations ({{selectedBranch?.LocationCount}})</div> 
+                    </div>
+                </div>
+                <div class="empty-space flex-1"> </div>
+                <div class=" d-flex w-100 align-center p-l-10 p-r-10 flex-1">
+                    <div class=" sub-head unrouted d-flex align-center m-l-5 w-100 p-t-5 p-b-5 f-w-400 f-s-13"><span  #rw> <i class="fa fa-angle-down f-s-18 p-r-10 fa-fw"></i> <img class="m-r-2 m-l-2" src="assets/icons/multiplelocations.png" alt="" height="23px" width="19px"> <span class="f-s-12 p-l-2">RECENT WORKS</span></span>  <hr [style.width]="'calc(98% - ' + (rw.clientWidth) + 'px)'"  class="hor-line "></div>
+                </div>
+                <p class="light-blue f-s-11 f-w-500 p-l-15 p-r-10">5 places were moved to the below Route by Henderson Sherry</p>
+                <div class="w-100 d-flex p-10 p-b-5 flex-wrap flex-1">
+                    <div  *ngFor="let location of branches[0].locations?.routes[0].locs" [ngClass]="draggeditem==location ? 'primaryloc-selected':''" class="no-close location-card p-5 m-r-10 m-b-10 flex-column c-pointer">
+                        <div class="m-l-2 flex-column  f-w-500 t-a-center flex-3 align-center j-center ">
+                            <img src="assets/icons/route.png" alt="" height="30px" width="30px"> 
+                            <div class="loc-id f-s-9 light-blue f-w-400 m-t-2">ID {{location?.id}}</div>
+                            <div class="text-overfl f-s-11 t-a-center loc-name d-flex align-center">{{location?.locname}}</div>
+                        </div> 
+                        <div class="technician border-top f-s-10 flex-1  d-flex align-center p-l-5 p-r-5 gap-2">
+                            <img src="assets/images/Ellipse -4.png" width="14px" height="14px" alt="" srcset="">  
+                            <div >Henderson Sherry</div> 
+                        </div>
+                    </div>
+                </div>
+           </div>
+            <div *ngIf="locationsView" class="  p-t-10  w-100 flex-column r-ctr1">
+                <div class=" d-flex unrouted-container align-center  m-r-20 p-t-2 p-b-2">
+                    <div class=" sub-head unrouted d-flex align-center m-l-5 w-100 p-t-5 p-b-5 f-w-400 f-s-13"><span  #sr> 
+                        <!-- <i class="fa fa-angle-right f-s-18 p-r-10 fa-fw hover-highlight"></i>  -->
+                        <img class="m-r-2 m-l-2 " src="assets/icons/navigation.png" alt="" height="20px" width="20px"> <span class="f-s-12 p-l-2 hover-highlight">UNROUTED</span></span>  <hr [style.width]="'calc(98% - ' + (sr.clientWidth) + 'px)'"  class="hor-line ">
+                    </div>
+                </div>
+                <div class="w-100 m-t-5 m-l-0 m-r-0  ">
+                    <ng-container *ngFor="let branch of branchData">
+                        <div class=" m-t-2 f-s-13 " *ngIf="branch?.showRoutesList">
+                            <div  class=" f-s-12 w-100 m-b-10" *ngFor="let route of branch?.Routes">
+                                <div class="d-flex w-100 align-center m-l-5">
+                                    <div  (contextmenu)="onRightClick($event,route)" (click)="selectRoute(route)" class="no-close d-flex align-bottom p-t-5 p-b-5 c-gr  c-pointer route-heading">
+                                        <!-- <i (click)="getLocationsofRoute(route)" *ngIf="!route?.isrouteDropped" class="fa fa-angle-right f-s-18 p-r-10 fa-fw hover-highlight"></i>  -->
+                                        <!-- <i (click)="route.isrouteDropped=!route?.isrouteDropped" *ngIf="route?.isrouteDropped" class="fa fa-angle-down f-s-18 p-r-10 fa-fw hover-highlight"></i>  -->
+                                        <img src="assets/icons/navigation.png" alt="" height="20px" width="20px"><span  class="m-l-5 hover-highlight">{{route?.RouteName}}</span> 
+                                        <div *ngIf="contextmenu && route?.RouteId == dropArea?.RouteId" class="no-close">
+                                            <app-context-menu [x]="contextmenuX" [y]="contextmenuY" (moveEvent)="moveLocationOnClick($event)"></app-context-menu>
+                                         </div>
+                                    </div> 
+                                </div>
+                            
+                               <!-- <div *ngIf="route?.Locations.length > 0 && route?.isrouteDropped" class="w-100 d-flex p-10 flex-wrap">
+                                <div (click)="selectLocationCard($event,location)" *ngFor="let location of route?.Locations" [ngClass]="draggeditem==location ? 'primaryloc-selected':''" class="no-close location-card p-5 m-r-10 m-b-10 flex-column c-pointer">
+                                    <div class="m-l-2 flex-column  f-w-500 t-a-center flex-3 align-center j-center ">
+                                        <img src="assets/icons/route.png" alt="" height="30px" width="30px"> 
+                                        <div class="loc-id f-s-9 light-blue f-w-400 m-t-2">ID {{location?.LocationId}}</div>
+                                        <div class="text-overfl f-s-10 t-a-center loc-name d-flex align-center">{{location?.StoreName}} {{location?.Address1}}</div>
+                                    </div> 
+                                    <div class="technician border-top f-s-10 flex-1  d-flex align-center p-l-5 p-r-5 gap-2">
+                                        <img src="assets/images/Ellipse -4.png" width="14px" height="14px" alt="" srcset="">  
+                                        <div >Henderson Sherry</div> 
+                                    </div>
+                                </div>
+                              </div> -->
+                          </div>
+                        </div>                        
+                    </ng-container>
+                    
+                    
+            </div>
+        </div>
+            <div *ngIf="routesView" class=" m-b-10 p-t-10  p-b-10 w-100 flex-column r-ctr1">
+                <div class="w-100 m-t-5 m-l-0 m-r-0">
+                    <div *ngIf="selectedRoute?.Locations?.length==0" class="d-flex align-center j-center c-gr f-s-15 empty-space ">
+                        No Locations to Show
+
+                    </div>
+                    <div *ngIf="selectedRoute?.Locations?.length > 0 " class="w-100 d-flex p-10 flex-wrap">
+                        <div  (dragstart)="itemDragged(location)"  (click)="selectLocationCard($event,location)" *ngFor="let location of selectedRoute?.Locations" [ngClass]="location?.selected ? 'primaryloc-selected':''" class="no-close location-card p-5 m-r-10 m-b-10 flex-column c-pointer ">
+                            <div class="m-l-2 flex-column  f-w-500 t-a-center flex-3 align-center j-center ">
+                                <img src="assets/icons/route.png" alt="" height="30px" width="30px" class="c-grab"> 
+                                <div class="loc-id f-s-9 light-blue f-w-400 m-t-2">ID {{location?.LocationId}}</div>
+                                <div class="text-overfl f-s-10 t-a-center loc-name d-flex align-center">{{location?.StoreName}} {{location?.Address1}}</div>
+                            </div> 
+                            <div class="technician border-top f-s-10 flex-1  d-flex align-center p-l-5 p-r-5 gap-2">
+                                <img src="assets/images/Ellipse -4.png" width="14px" height="14px" alt="" srcset="">  
+                                <div >Henderson Sherry</div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+  </div>
+</div>
